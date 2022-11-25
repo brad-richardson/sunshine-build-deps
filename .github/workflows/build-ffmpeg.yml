@@ -38,33 +38,33 @@ jobs:
               --enable-v4l2_m2m \
               --enable-vaapi \
               --enable-vdpau
-          - os_type: macos
-            os: macos-11
-            arch: x86_64
-            shell: bash
-            cmake_generator: Unix Makefiles  # should be `Xcode` but that fails
-            ffmpeg_extras: |
-              --enable-encoder=libx264,libx265 \
-              --enable-encoder=h264_videotoolbox,hevc_videotoolbox \
-              --enable-videotoolbox
-          - os_type: windows
-            os: windows-2022
-            arch: x86_64
-            shell: msys2 {0}
-            cmake_generator: MSYS Makefiles
-            ffmpeg_extras: |
-              --enable-amf \
-              --enable-cuda \
-              --enable-cuvid \
-              --enable-d3d11va \
-              --enable-dxva2 \
-              --enable-encoder=h264_amf,hevc_amf \
-              --enable-encoder=libx264,libx265 \
-              --enable-encoder=h264_mf,hevc_mf \
-              --enable-encoder=h264_nvenc,hevc_nvenc \
-              --enable-ffnvcodec \
-              --enable-nvenc \
-              --enable-mediafoundation
+          # - os_type: macos
+          #   os: macos-11
+          #   arch: x86_64
+          #   shell: bash
+          #   cmake_generator: Unix Makefiles  # should be `Xcode` but that fails
+          #   ffmpeg_extras: |
+          #     --enable-encoder=libx264,libx265 \
+          #     --enable-encoder=h264_videotoolbox,hevc_videotoolbox \
+          #     --enable-videotoolbox
+          # - os_type: windows
+          #   os: windows-2022
+          #   arch: x86_64
+          #   shell: msys2 {0}
+          #   cmake_generator: MSYS Makefiles
+          #   ffmpeg_extras: |
+          #     --enable-amf \
+          #     --enable-cuda \
+          #     --enable-cuvid \
+          #     --enable-d3d11va \
+          #     --enable-dxva2 \
+          #     --enable-encoder=h264_amf,hevc_amf \
+          #     --enable-encoder=libx264,libx265 \
+          #     --enable-encoder=h264_mf,hevc_mf \
+          #     --enable-encoder=h264_nvenc,hevc_nvenc \
+          #     --enable-ffnvcodec \
+          #     --enable-nvenc \
+          #     --enable-mediafoundation
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -224,8 +224,7 @@ jobs:
             --prefix="$root_path/ffmpeg_build" \
             --pkg-config-flags="--static" \
             --extra-cflags="-I$root_path/ffmpeg_build/include" \
-            --extra-ldflags="$root_path/ffmpeg_build/lib/libx264.a \
-            $root_path/ffmpeg_build/lib/libx265.a -L$root_path/ffmpeg_build/lib" \
+            --extra-ldflags="$root_path/ffmpeg_build/lib/libx264.a $root_path/ffmpeg_build/lib/libx265.a" \
             --extra-libs="-lpthread -lm" \
             --ld="g++" \
             --bindir="$root_path/bin" \
