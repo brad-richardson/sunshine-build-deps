@@ -178,9 +178,9 @@ jobs:
         run: |
           PATH="$root_path/bin:$PATH" cmake -G "${{ matrix.cmake_generator }}" \
             -DCMAKE_INSTALL_PREFIX="$root_path/ffmpeg_build" \
-            -DENABLE_CLI=off \
-            -DENABLE_HDR10_PLUS=1 \
-            -DSTATIC_LINK_CRT=1 \
+            -DENABLE_CLI=OFF \
+            -DENABLE_HDR10_PLUS=ON \
+            -DENABLED_SHARED=OFF \
             ./source
           PATH="$root_path/bin:$PATH" make -j$(nproc || sysctl -n hw.logicalcpu)
           make install
@@ -212,8 +212,8 @@ jobs:
             --prefix="$root_path/ffmpeg_build" \
             --pkg-config-flags="--static" \
             --extra-cflags="-I$root_path/ffmpeg_build/include" \
-            --extra-ldflags="-L$root_path/ffmpeg_build/lib" \
-            --extra-libs="-static -lpthread -lmvec -lm" \
+            --extra-ldflags="$root_path/ffmpeg_build/lib/libx264.a $root_path/ffmpeg_build/lib/libx265.a -L$root_path/ffmpeg_build/lib" \
+            --extra-libs="-lpthread -lm" \
             --ld="g++" \
             --bindir="$root_path/bin" \
             --disable-all \
