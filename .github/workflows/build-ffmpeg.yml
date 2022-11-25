@@ -20,7 +20,7 @@ jobs:
       matrix:
         include:
           - os_type: linux
-            os: ubuntu-22.04
+            os: ubuntu-20.04
             arch: x86_64
             shell: bash
             cmake_generator: Unix Makefiles
@@ -181,7 +181,6 @@ jobs:
             -DENABLE_CLI=off \
             -DENABLE_HDR10_PLUS=1 \
             -DSTATIC_LINK_CRT=1 \
-            -DEXTRA_LIB="pthread mvec m" \
             ./source
           PATH="$root_path/bin:$PATH" make -j$(nproc || sysctl -n hw.logicalcpu)
           make install
