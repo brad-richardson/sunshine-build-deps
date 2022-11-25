@@ -49,6 +49,7 @@ jobs:
             cmake_generator: MSYS Makefiles
             ffmpeg_extras: |
               --enable-amf \
+              --enable-d3d11va \
               --enable-encoder=h264_amf,hevc_amf \
               --enable-encoder=libx264,libx265 \
               --enable-encoder=h264_mf,hevc_mf \
