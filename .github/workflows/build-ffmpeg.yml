@@ -167,35 +167,35 @@ jobs:
           mkdir -p ./ffmpeg_build/include/AMF
           cp -av "./ffmpeg_sources/AMF/amf/public/include/." "./ffmpeg_build/include/AMF"
 
-      - name: libx264
-        env:
-          root_path: ${{ steps.root.outputs.root_path }}
-        working-directory: ffmpeg_sources/x264
-        run: |
-          PATH="$root_path/bin:$PATH" \
-            PKG_CONFIG_PATH="$root_path/ffmpeg_build/lib/pkgconfig" \
-            ./configure \
-            --prefix="$root_path/ffmpeg_build" \
-            --bindir="$root_path/bin" \
-            --disable-cli \
-            --enable-static
-          PATH="$root_path/bin:$PATH" make -j$(nproc || sysctl -n hw.logicalcpu)
-          make install
+      # - name: libx264
+      #   env:
+      #     root_path: ${{ steps.root.outputs.root_path }}
+      #   working-directory: ffmpeg_sources/x264
+      #   run: |
+      #     PATH="$root_path/bin:$PATH" \
+      #       PKG_CONFIG_PATH="$root_path/ffmpeg_build/lib/pkgconfig" \
+      #       ./configure \
+      #       --prefix="$root_path/ffmpeg_build" \
+      #       --bindir="$root_path/bin" \
+      #       --disable-cli \
+      #       --enable-static
+      #     PATH="$root_path/bin:$PATH" make -j$(nproc || sysctl -n hw.logicalcpu)
+      #     make install
 
-      - name: libx265
-        env:
-          root_path: ${{ steps.root.outputs.root_path }}
-        working-directory: ffmpeg_sources/x265_git
-        run: |
-          PATH="$root_path/bin:$PATH" cmake -G "${{ matrix.cmake_generator }}" \
-            -DCMAKE_INSTALL_PREFIX="$root_path/ffmpeg_build" \
-            -DENABLE_CLI=OFF \
-            -DENABLE_HDR10_PLUS=ON \
-            -DSTATIC_LINK_CRT=ON \
-            -DENABLED_SHARED=OFF \
-            ./source
-          PATH="$root_path/bin:$PATH" make -j$(nproc || sysctl -n hw.logicalcpu)
-          make install
+      # - name: libx265
+      #   env:
+      #     root_path: ${{ steps.root.outputs.root_path }}
+      #   working-directory: ffmpeg_sources/x265_git
+      #   run: |
+      #     PATH="$root_path/bin:$PATH" cmake -G "${{ matrix.cmake_generator }}" \
+      #       -DCMAKE_INSTALL_PREFIX="$root_path/ffmpeg_build" \
+      #       -DENABLE_CLI=OFF \
+      #       -DENABLE_HDR10_PLUS=ON \
+      #       -DSTATIC_LINK_CRT=ON \
+      #       -DENABLED_SHARED=OFF \
+      #       ./source
+      #     PATH="$root_path/bin:$PATH" make -j$(nproc || sysctl -n hw.logicalcpu)
+      #     make install
 
       - name: nvenc
         id: nvenc
@@ -223,8 +223,6 @@ jobs:
             ./configure \
             --prefix="$root_path/ffmpeg_build" \
             --pkg-config-flags="--static" \
-            --extra-cflags="-I$root_path/ffmpeg_build/include" \
-            --extra-ldflags="$root_path/ffmpeg_build/lib/libx264.a $root_path/ffmpeg_build/lib/libx265.a" \
             --extra-libs="-lpthread -lm" \
             --ld="g++" \
             --bindir="$root_path/bin" \
