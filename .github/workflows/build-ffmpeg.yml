@@ -181,6 +181,7 @@ jobs:
             -DENABLE_CLI=off \
             -DENABLE_HDR10_PLUS=1 \
             -DSTATIC_LINK_CRT=1 \
+            -DEXTRA_LIB="pthread mvec m" \
             ./source
           PATH="$root_path/bin:$PATH" make -j$(nproc || sysctl -n hw.logicalcpu)
           make install
@@ -213,7 +214,7 @@ jobs:
             --pkg-config-flags="--static" \
             --extra-cflags="-I$root_path/ffmpeg_build/include" \
             --extra-ldflags="-L$root_path/ffmpeg_build/lib" \
-            --extra-libs="-lpthread -lmvec -lm" \
+            --extra-libs="-lpthread -lm" \
             --ld="g++" \
             --bindir="$root_path/bin" \
             --disable-all \
