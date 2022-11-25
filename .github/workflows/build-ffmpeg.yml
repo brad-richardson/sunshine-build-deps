@@ -213,6 +213,7 @@ jobs:
             --pkg-config-flags="--static" \
             --extra-cflags="-I$root_path/ffmpeg_build/include" \
             --extra-ldflags="-L$root_path/ffmpeg_build/lib" \
+            --extra-libs="-static -lpthread -lmvec -lm" \
             --ld="g++" \
             --bindir="$root_path/bin" \
             --disable-all \
