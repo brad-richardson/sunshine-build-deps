@@ -180,6 +180,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX="$root_path/ffmpeg_build" \
             -DENABLE_CLI=OFF \
             -DENABLE_HDR10_PLUS=ON \
+            -DSTATIC_LINK_CRT=ON \
             -DENABLED_SHARED=OFF \
             ./source
           PATH="$root_path/bin:$PATH" make -j$(nproc || sysctl -n hw.logicalcpu)
@@ -212,11 +213,14 @@ jobs:
             --prefix="$root_path/ffmpeg_build" \
             --pkg-config-flags="--static" \
             --extra-cflags="-I$root_path/ffmpeg_build/include" \
-            --extra-ldflags="$root_path/ffmpeg_build/lib/libx264.a $root_path/ffmpeg_build/lib/libx265.a -L$root_path/ffmpeg_build/lib" \
+            --extra-ldflags="$root_path/ffmpeg_build/lib/libx264.a \
+            $root_path/ffmpeg_build/lib/libx265.a -L$root_path/ffmpeg_build/lib" \
             --extra-libs="-lpthread -lm" \
             --ld="g++" \
             --bindir="$root_path/bin" \
             --disable-all \
+            --disable-autodetect \
+            --disable-iconv \
             --enable-avcodec \
             --enable-gpl \
             --enable-libx264 \
