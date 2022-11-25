@@ -181,6 +181,7 @@ jobs:
             -DENABLE_CLI=off \
             -DENABLE_HDR10_PLUS=1 \
             -DENABLE_SHARED=0 \
+            -DCMAKE_CXX_FLAGS="-nostdlib -lgcc" \
             ./source
           PATH="$root_path/bin:$PATH" make -j$(nproc || sysctl -n hw.logicalcpu)
           make install
