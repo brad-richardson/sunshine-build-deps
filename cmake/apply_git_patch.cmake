@@ -5,8 +5,7 @@
 macro(apply_git_patch REPO_PATH PATCH_PATH)
     execute_process(COMMAND git apply --check ${PATCH_PATH}
         WORKING_DIRECTORY ${REPO_PATH}
-        RESULT_VARIABLE SUCCESS
-        ERROR_QUIET)
+        RESULT_VARIABLE SUCCESS)
 
     if(${SUCCESS} EQUAL 0)
         message("Applying git patch ${PATCH_PATH} in ${REPO_PATH} repository")
