@@ -26,7 +26,7 @@ if(NOT EXISTS ${FFMPEG_GENERATED_SRC_PATH}/config.h)
         )
 endif()
 
-# Minimal set of headers needed for Sunshine
+# Headers needed to link for Sunshine
 configure_file(${AVCODEC_GENERATED_SRC_PATH}/av1.h ${CBS_GENERATED_SRC_INCLUDE_PATH}/av1.h COPYONLY)
 configure_file(${AVCODEC_GENERATED_SRC_PATH}/cbs_av1.h ${CBS_GENERATED_SRC_INCLUDE_PATH}/cbs_av1.h COPYONLY)
 configure_file(${AVCODEC_GENERATED_SRC_PATH}/cbs_bsf.h ${CBS_GENERATED_SRC_INCLUDE_PATH}/cbs_bsf.h COPYONLY)
@@ -51,12 +51,6 @@ configure_file(${AVCODEC_GENERATED_SRC_PATH}/arm/mathops.h ${CBS_GENERATED_SRC_I
 configure_file(${AVCODEC_GENERATED_SRC_PATH}/sei.h ${CBS_GENERATED_SRC_INCLUDE_PATH}/sei.h COPYONLY)
 configure_file(${AVCODEC_GENERATED_SRC_PATH}/vlc.h ${CBS_GENERATED_SRC_INCLUDE_PATH}/vlc.h COPYONLY)
 
-configure_file(${FFMPEG_GENERATED_SRC_PATH}/libavutil/x86/asm.h ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/x86/asm.h COPYONLY)
-configure_file(${FFMPEG_GENERATED_SRC_PATH}/libavutil/x86/intmath.h ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/x86/intmath.h COPYONLY)
-configure_file(${FFMPEG_GENERATED_SRC_PATH}/libavutil/arm/intmath.h ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/arm/intmath.h COPYONLY)
-configure_file(${FFMPEG_GENERATED_SRC_PATH}/libavutil/intmath.h ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/intmath.h COPYONLY)
-# configure_file(${FFMPEG_GENERATED_SRC_PATH}/libavutil/common.h ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/common.h COPYONLY)
-
 set(CBS_SOURCE_FILES
     ${CBS_GENERATED_SRC_INCLUDE_PATH}/av1.h
     ${CBS_GENERATED_SRC_INCLUDE_PATH}/cbs_av1.h
@@ -79,11 +73,7 @@ set(CBS_SOURCE_FILES
     ${CBS_GENERATED_SRC_INCLUDE_PATH}/mathops.h
     ${CBS_GENERATED_SRC_INCLUDE_PATH}/sei.h
     ${CBS_GENERATED_SRC_INCLUDE_PATH}/vlc.h
-    ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/x86/asm.h
-    ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/x86/intmath.h
-    ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/arm/intmath.h
-    # ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/common.h
-    ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/intmath.h
+
 
     ${AVCODEC_GENERATED_SRC_PATH}/cbs.c
     ${AVCODEC_GENERATED_SRC_PATH}/cbs_h2645.c
@@ -94,9 +84,13 @@ set(CBS_SOURCE_FILES
     ${AVCODEC_GENERATED_SRC_PATH}/cbs_sei.c
     ${AVCODEC_GENERATED_SRC_PATH}/h264_levels.c
     ${AVCODEC_GENERATED_SRC_PATH}/h2645_parse.c
-    # ${FFMPEG_GENERATED_SRC_PATH}/libavutil/intmath.c
+    ${FFMPEG_GENERATED_SRC_PATH}/libavutil/intmath.c
 
-    # ${FFMPEG_GENERATED_SRC_PATH}/libavutil/common.h
+    # Additional headers containing symbols needed to compile
+    ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/x86/asm.h
+    ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/x86/intmath.h
+    ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/arm/intmath.h
+    ${CMAKE_GENERATED_SRC_PATH}/include/libavutil/intmath.h
 )
 
 include_directories(
