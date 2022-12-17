@@ -25,3 +25,15 @@ index 0ef7b42ed9..b6242367c8 100644
  static int FUNC(filler_payload)
      (CodedBitstreamContext *ctx, RWContext *rw,
       SEIRawFillerPayload *current, SEIMessageState *state)
+diff --git a/libavcodec/cbs_av1.c b/libavcodec/cbs_av1.c
+index 1229480567..57ff6cb9be 100644
+--- a/libavcodec/cbs_av1.c
++++ b/libavcodec/cbs_av1.c
+@@ -17,6 +17,7 @@
+  */
+
+ #include "libavutil/avassert.h"
++#include "libavutil/intmath.h"
+ #include "libavutil/opt.h"
+ #include "libavutil/pixfmt.h"
+ 
