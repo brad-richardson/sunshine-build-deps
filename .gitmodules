@@ -17,4 +17,16 @@
 [submodule "ffmpeg_sources/ffmpeg"]
 	path = ffmpeg_sources/ffmpeg
 	url = https://github.com/FFmpeg/FFmpeg
-	branch = release/5.1
+	branch = master
+[submodule "ffmpeg_sources/MediaSDK"]
+	path = ffmpeg_sources/MediaSDK
+	url = https://github.com/Intel-Media-SDK/MediaSDK
+	branch = master
+[submodule "ffmpeg_sources/oneVPL-intel-gpu"]
+	path = ffmpeg_sources/oneVPL-intel-gpu
+	url = https://github.com/oneapi-src/oneVPL-intel-gpu
+	branch = main
+[submodule "ffmpeg_sources/libva"]
+	path = ffmpeg_sources/libva
+	url = https://github.com/intel/libva
+	branch = v2.16-branch
