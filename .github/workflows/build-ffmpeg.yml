@@ -20,7 +20,7 @@ jobs:
       matrix:
         include:
           - os_type: linux
-            os: ubuntu-20.04  # Pinned until all platforms moved to 22.04
+            os: ubuntu-22.04  # Pinned until all platforms moved to 22.04
             arch: x86_64
             shell: bash
             cmake_generator: Unix Makefiles
@@ -167,6 +167,7 @@ jobs:
               libopus-dev \
               libsdl2-dev \
               libtool \
+              libva-dev:$package_arch \
               libvdpau-dev \
               libvorbis-dev \
               libxcb1-dev \
@@ -183,10 +184,15 @@ jobs:
 
             if [[ ${{ matrix.arch }} == "aarch64" ]]; then
               sudo apt-get -y install \
-                libva-dev:$package_arch \
                 binutils-${{ matrix.host }} \
                 g++-${{ matrix.host }} \
                 gcc-${{ matrix.host }}
+            else
+              sudo apt-get -y install \
+                libmfx-dev \
+                libmfx-gen-dev \
+                libvpl-dev \
+                libvpl2
             fi
             echo "::endgroup::"
           elif [[ ${{ matrix.os_type }} == "macos" ]]; then
@@ -223,12 +229,10 @@ jobs:
             make
             pkg-config
             mingw-w64-x86_64-cmake
-            mingw-w64-x86_64-dlfcn
             mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-libmfx
             mingw-w64-x86_64-nasm
             mingw-w64-x86_64-onevpl
-            mingw-w64-x86_64-libmfx
-            
 
       - name: Initialize Submodules
         # libx265 has issues when using the recursive method of the first checkout action
@@ -258,21 +262,6 @@ jobs:
           else
             echo "CFLAGS=-arch arm64 -target ${{ matrix.host }} -march=armv8-a -mcpu=generic" >> $GITHUB_OUTPUT
           fi
-
-      - name: libva
-        if: ${{ matrix.os_type == 'linux' && matrix.arch == 'x86_64' }}
-        working-directory: ffmpeg_sources/libva
-        run: |
-          PATH="$root_path/bin:$PATH" \
-            PKG_CONFIG_PATH="$root_path/ffmpeg_build/lib/pkgconfig" \
-            ./autogen.sh \
-            ./configure \
-            --prefix=${TARGET_DIR} \
-            --enable-drm
-
-           make -j$(nproc)
-
-           make install
 
       - name: amf
         if: ${{ matrix.os_type != 'macos' }}
